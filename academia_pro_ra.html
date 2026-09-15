@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RA Trading Academy — Read. Analyze. Act.</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #070B13;
+            --bg-card: #0D1322;
+            --bg-card-hover: #141C30;
+            --gold: #C9A84C;
+            --gold-light: #E5C368;
+            --blue: #4A90D9;
+            --blue-hover: #357ABD;
+            --text-main: #E2E8F0;
+            --text-muted: #8A99AD;
+            --green: #22C55E;
+            --red: #EF4444;
+            --border-color: #1E293B;
+            --font-title: 'Bebas Neue', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'DM Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.5;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar Navigation */
+        aside {
+            width: 260px;
+            background-color: var(--bg-card);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.5rem 1rem;
+            flex-shrink: 0;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            padding-left: 0.5rem;
+        }
+
+        .logo-box {
+            width: 42px;
+            height: 42px;
+            background: #000;
+            border: 2px solid var(--gold);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-title);
+            font-size: 1.5rem;
+            color: var(--gold);
+            letter-spacing: 1px;
+        }
+
+        .brand-text h1 {
+            font-family: var(--font-title);
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+            color: var(--text-main);
+            line-height: 1;
+        }
+
+        .brand-text p {
+            font-size: 0.7rem;
+            color: var(--gold);
+            font-family: var(--font-mono);
+            letter-spacing: 0.5px;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item button {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+
+        .nav-item button:hover, .nav-item button.active {
+            background-color: rgba(201, 168, 76, 0.1);
+            color: var(--gold);
+            border-color: rgba(201, 168, 76, 0.3);
+        }
+
+        .user-profile {
+            padding: 1rem 0.5rem 0 0.5rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85rem;
+        }
+
+        .user-name {
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .user-status {
+            color: var(--gold);
+            font-size: 0.75rem;
+            font-family: var(--font-mono);
+        }
+
+        /* Main Content Container */
+        main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+            background-color: var(--bg-dark);
+        }
+
+        .tab-content {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h2 {
+            font-family: var(--font-title);
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+            color: var(--gold);
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Buttons & Utility Styles */
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            font-family: var(--font-body);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-gold {
+            background-color: var(--gold);
+            color: #000;
+        }
+
+        .btn-gold:hover {
+            background-color: var(--gold-light);
+        }
+
+        .btn-blue {
+            background-color: var(--blue);
+            color: #fff;
+        }
+
+        .btn-blue:hover {
+            background-color: var(--blue-hover);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            background: var(--bg-card);
+            border-color: var(--gold);
+        }
+
+        /* Academia Modules List */
+        .level-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .level-title {
+            font-family: var(--font-title);
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            color: var(--blue);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1rem;
+        }
+
+        .module-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+
+        .module-card.locked {
+            opacity: 0.5;
+        }
+
+        .module-card.completed {
+            border-color: var(--gold);
+        }
+
+        .module-badge {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .module-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .module-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .module-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Simulador MNQ */
+        .sim-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .sim-chart-card, .sim-panel-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        canvas#mnqChart {
+            width: 100%;
+            height: 380px;
+            background-color: #03060C;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+        }
+
+        .sim-controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .sim-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .metric-box {
+            background-color: var(--bg-dark);
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .metric-box label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: block;
+        }
+
+        .metric-box span {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.3rem;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.6rem;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-main);
+            font-family: var(--font-body);
+        }
+
+        /* Diario Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .data-table th, .data-table td {
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        .data-table th {
+            background-color: var(--bg-card-hover);
+            color: var(--gold);
+            font-family: var(--font-mono);
+        }
+
+        /* Coach Chat Box */
+        .chat-box {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .msg {
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            max-width: 80%;
+            font-size: 0.9rem;
+        }
+
+        .msg-ia {
+            background-color: rgba(74, 144, 217, 0.15);
+            border: 1px solid rgba(74, 144, 217, 0.3);
+            align-self: flex-start;
+        }
+
+        .msg-user {
+            background-color: rgba(201, 168, 76, 0.15);
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            align-self: flex-end;
+        }
+
+        .chat-input-area {
+            padding: 0.75rem;
+            background-color: var(--bg-dark);
+            display: flex;
+            gap: 0.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--gold);
+            border-radius: 8px;
+            width: 90%;
+            max-width: 650px;
+            padding: 1.5rem;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <aside>
+        <div>
+            <div class="brand">
+                <div class="logo-box">RA</div>
+                <div class="brand-text">
+                    <h1>RA TRADING</h1>
+                    <p>READ. ANALYZE. ACT.</p>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><button class="active" onclick="switchTab('academia')">📚 Academia (36 Módulos)</button></li>
+                <li class="nav-item"><button onclick="switchTab('simulador')">📉 Simulador Live MNQ</button></li>
+                <li class="nav-item"><button onclick="switchTab('diario')">📓 Diario de Trading</button></li>
+                <li class="nav-item"><button onclick="switchTab('calculadora')">🧮 Calculadora TCP</button></li>
+                <li class="nav-item"><button onclick="switchTab('coach')">🤖 Coach IA (Mentoría)</button></li>
+            </ul>
+        </div>
+        <div class="user-profile">
+            <div class="user-name">Rubén Armendáriz</div>
+            <div class="user-status">Objetivo: Earn2Trade TCP $50K</div>
+        </div>
+    </aside>
+
+    <!-- Main Content Panel -->
+    <main>
+
+        <!-- TAB 1: ACADEMIA DE 36 MÓDULOS -->
+        <section id="tab-academia" class="tab-content active">
+            <div class="page-header">
+                <h2>ACADEMIA VIRTUAL DE TRADING DE FUTUROS</h2>
+                <p>Metodología SMC propia aplicada a MNQ. Exámenes con bloqueo del 80% obligatorio para avanzar.</p>
+            </div>
+
+            <!-- Nivel 1: Principiante -->
+            <div class="level-section">
+                <h3 class="level-title">NIVEL PRINCIPIANTE — FUNDAMENTOS Y MECÁNICA DE FUTUROS</h3>
+                <div class="modules-grid" id="grid-principiante"></div>
+            </div>
+
+            <!-- Nivel 2: Intermedio -->
+            <div class="level-section">
+                <h3 class="level-title">NIVEL INTERMEDIO — SMART MONEY CONCEPTS (SMC) & ESTRUCTURA</h3>
+                <div class="modules-grid" id="grid-intermedio"></div>
+            </div>
+
+            <!-- Nivel 3: Avanzado -->
+            <div class="level-section">
+                <h3 class="level-title">NIVEL AVANZADO — EJECUCIÓN RA, ORDER FLOW Y CONSISTENCIA TCP</h3>
+                <div class="modules-grid" id="grid-avanzado"></div>
+            </div>
+        </section>
+
+        <!-- TAB 2: SIMULADOR LIVE MNQ -->
+        <section id="tab-simulador" class="tab-content">
+            <div class="page-header">
+                <h2>SIMULADOR MNQ EN TIEMPO REAL</h2>
+                <p>Práctica de lectura de velas, entradas y gestión de riesgo en tiempo simulado.</p>
+            </div>
+
+            <div class="sim-container">
+                <div class="sim-chart-card">
+                    <canvas id="mnqChart"></canvas>
+                    <div class="sim-controls">
+                        <button class="btn btn-gold" style="background-color: var(--green); color: white;" onclick="executeSimTrade('LONG')">COMPRA (LONG)</button>
+                        <button class="btn btn-gold" style="background-color: var(--red); color: white;" onclick="executeSimTrade('SHORT')">VENTA (SHORT)</button>
+                        <button class="btn btn-outline" onclick="closeSimTrade()">CERRAR POSICIÓN</button>
+                    </div>
+                </div>
+
+                <div class="sim-panel-card">
+                    <h3 style="font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 1rem; color: var(--gold);">PANEL DE CONTROL</h3>
+                    
+                    <div class="sim-metrics">
+                        <div class="metric-box">
+                            <label>Balance Cuenta</label>
+                            <span id="simBalance">$50,000.00</span>
+                        </div>
+                        <div class="metric-box">
+                            <label>P&L Flotante</label>
+                            <span id="simPnL">$0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contratos MNQ</label>
+                        <input type="number" id="simContracts" value="2" min="1" max="10">
+                    </div>
+                    <div class="form-group">
+                        <label>Stop Loss (Ticks)</label>
+                        <input type="number" id="simSL" value="40">
+                    </div>
+                    <div class="form-group">
+                        <label>Take Profit (Ticks)</label>
+                        <input type="number" id="simTP" value="80">
+                    </div>
+                    <div class="form-group">
+                        <label>Sesión de Mercado</label>
+                        <select id="simSession" onchange="changeSimSession()">
+                            <option value="NY">Nueva York (Alta Volatilidad)</option>
+                            <option value="LDN">Londres (Tendencial)</option>
+                            <option value="ASIA">Asia (Rango)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: DIARIO DE TRADING -->
+        <section id="tab-diario" class="tab-content">
+            <div class="page-header">
+                <h2>DIARIO DE TRADING RA</h2>
+                <p>Registro continuo para evaluación de consistencia y regla del 30% TCP.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1.5rem;">
+                <div class="sim-panel-card">
+                    <h3 style="font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 1rem; color: var(--gold);">REGISTRAR OPERACIÓN</h3>
+                    <form id="journalForm" onsubmit="saveJournalEntry(event)">
+                        <div class="form-group">
+                            <label>Instrumento / Dirección</label>
+                            <select id="jDir">
+                                <option value="MNQ LONG">MNQ — LONG</option>
+                                <option value="MNQ SHORT">MNQ — SHORT</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Resultado P&L ($)</label>
+                            <input type="number" id="jPnL" placeholder="ej. 250 o -120" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Setup / Confluencia</label>
+                            <input type="text" id="jSetup" placeholder="ej. OB 15M + Barrida Liquidez NY" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Estado Emocional / Notas</label>
+                            <textarea id="jNotes" rows="3" placeholder="Ejecución disciplinada, respete el SL..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-gold" style="width: 100%;">Guardar en Diario</button>
+                    </form>
+                </div>
+
+                <div>
+                    <h3 style="font-family: var(--font-title); font-size: 1.2rem; color: var(--blue);">HISTORIAL DE OPERACIONES</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Trade</th>
+                                <th>Setup</th>
+                                <th>P&L</th>
+                                <th>Notas</th>
+                            </tr>
+                        </thead>
+                        <tbody id="journalTableBody">
+                            <!-- Inyectado por JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: CALCULADORA TCP EARN2TRADE -->
+        <section id="tab-calculadora" class="tab-content">
+            <div class="page-header">
+                <h2>CALCULADORA DE GESTIÓN RA (EARN2TRADE TCP $50K)</h2>
+                <p>Garantiza el cumplimiento estricto del riesgo por trade y la regla de consistencia del 30%.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div class="sim-panel-card">
+                    <h3 style="font-family: var(--font-title); font-size: 1.2rem; color: var(--gold); margin-bottom: 1rem;">PARÁMETROS DEL TRADE</h3>
+                    <div class="form-group">
+                        <label>Balance Actual de la Cuenta ($)</label>
+                        <input type="number" id="calcBalance" value="50000" oninput="calculateRisk()">
+                    </div>
+                    <div class="form-group">
+                        <label>Riesgo Permitido por Trade (%)</label>
+                        <input type="number" id="calcRiskPct" value="1" step="0.1" oninput="calculateRisk()">
+                    </div>
+                    <div class="form-group">
+                        <label>Tamaño del Stop Loss (Puntos MNQ)</label>
+                        <input type="number" id="calcSLPoints" value="10" step="0.25" oninput="calculateRisk()">
+                    </div>
+                </div>
+
+                <div class="sim-panel-card" style="display: flex; flex-direction: column; justify-content: center;">
+                    <h3 style="font-family: var(--font-title); font-size: 1.2rem; color: var(--blue); margin-bottom: 1rem;">RESULTADOS Y LÍMITES</h3>
+                    <div class="metric-box" style="margin-bottom: 0.8rem;">
+                        <label>Riesgo Máximo Recomendado ($)</label>
+                        <span id="calcRiskUsd" style="color: var(--red);">$500.00</span>
+                    </div>
+                    <div class="metric-box" style="margin-bottom: 0.8rem;">
+                        <label>Número Máximo de Contratos MNQ</label>
+                        <span id="calcContracts" style="color: var(--gold);">2 Contratos</span>
+                    </div>
+                    <div class="metric-box">
+                        <label>Límite Ganancia Día Único (Regla 30% TCP)</label>
+                        <span id="calc30Limit" style="color: var(--green);">$900.00</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: COACH IA -->
+        <section id="tab-coach" class="tab-content">
+            <div class="page-header">
+                <h2>MENTOR IA — METODOLOGÍA RA TRADING</h2>
+                <p>Asistente virtual programado con 15+ años de experiencia en futuros MNQ y reglas de disciplina.</p>
+            </div>
+
+            <div class="chat-box">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="msg msg-ia">
+                        Hola Rubén. Estoy listo para revisar tus setups en MNQ, evaluar la gestión de riesgo de tus operaciones o repasar la disciplina operativa. ¿En qué trabajamos hoy?
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="coachInput" placeholder="Escribe tu duda sobre MNQ, SMC o tu bitácora..." style="flex:1;" onkeypress="if(event.key==='Enter') sendCoachMessage()">
+                    <button class="btn btn-gold" onclick="sendCoachMessage()">Enviar</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL DE EXAMEN / LECCIÓN -->
+    <div id="quizModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle" style="font-family: var(--font-title); font-size: 1.6rem; color: var(--gold); margin-bottom: 1rem;">EXAMEN DEL MÓDULO</h3>
+            <div id="modalBody">
+                <!-- Inyectado por JS -->
+            </div>
+            <div style="margin-top: 1.5rem; text-align: right;">
+                <button class="btn btn-outline" onclick="closeModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* -------------------------------------------------------------------
+           1. ESTRUCTURA Y NAVEGACIÓN DE PESTAÑAS
+        ------------------------------------------------------------------- */
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-item button').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('tab-' + tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+            
+            if (tabId === 'simulador' && !window.simRunning) {
+                initSimChart();
+            }
+        }
+
+        /* -------------------------------------------------------------------
+           2. DATOS DE LOS 36 MÓDULOS DE LA ACADEMIA
+        ------------------------------------------------------------------- */
+        const modulesData = {
+            principiante: [
+                { id: 1, title: "1. Fundamentos del Trading de Futuros", desc: "Introducción a los contratos de futuros e instrumentos apalancados." },
+                { id: 2, title: "2. Mecánica del Mercado MNQ & NQ", desc: "Especificaciones, tick value ($0.50/0.25 pts) y margen inicial." },
+                { id: 3, title: "3. Volatilidad y Comportamiento del Nasdaq", desc: "Horarios operativos y apertura de NY (9:30 AM EST)." },
+                { id: 4, title: "4. Configuración de NinjaTrader 8", desc: "Manejo de gráficos, plantillas y conexión de datos." },
+                { id: 5, title: "5. Tipos de Órdenes y Estrategias ATM", desc: "Market, Limit, Stop y configuración automatizada ATM." },
+                { id: 6, title: "6. Gráficos de Velas Japonesas y Tiempo", desc: "Lectura básica de apertura, máximo, mínimo y cierre." },
+                { id: 7, title: "7. Análisis Técnico Básico: Tendencias", desc: "Identificación de estructura primaria y secundaria." },
+                { id: 8, title: "8. Soporte y Resistencia Operativos", desc: "Niveles horizontales de pivote e interacción del precio." },
+                { id: 9, title: "9. Uso Estratégico de Medias Móviles (EMA)", desc: "Aplicación de EMA 55 y 100 como filtro dinámico." },
+                { id: 10, title: "10. Las 3 Sesiones: Asia, Londres y NY", desc: "Características operativas de cada franja horaria." },
+                { id: 11, title: "11. Introducción a la Gestión de Riesgo", desc: "Regla del 1% por trade y límites diarios." },
+                { id: 12, title: "12. Earn2Trade TCP: Reglas y Estructura", desc: "Evaluación de $50k, drawdown y meta del 30%." }
+            ],
+            intermedio: [
+                { id: 13, title: "13. Análisis Técnico Avanzado", desc: "Fuerza del movimiento y consolidaciones del mercado." },
+                { id: 14, title: "14. Estructura de Mercado SMC: BOS y MSS", desc: "Break of Structure y Market Structure Shift." },
+                { id: 15, title: "15. Concepto de Liquidez: EQH y EQL", desc: "Zonas de atracción de órdenes e Stop Losses masivos." },
+                { id: 16, title: "16. Price Action: Imbalances y FVG", desc: "Identificación e interpretación de Fair Value Gaps." },
+                { id: 17, title: "17. Order Blocks Alcistas y Bajistas", desc: "Criterios para seleccionar bloques institucionales de alta probabilidad." },
+                { id: 18, title: "18. CHoCH (Change of Character)", desc: "Detección temprana de cambios de tendencia." },
+                { id: 19, title: "19. Barridas de Liquidez (Sweeps)", desc: "Identificación de manipulaciones de mercado antes del movimiento real." },
+                { id: 20, title: "20. Top-Down Analysis (1H → 15M → 5M)", desc: "Alineación de temporalidades para entradas precisas." },
+                { id: 21, title: "21. Modelo de Entrada RA Metodología", desc: "Checklist estricto de confirmación para ejecutar trades." },
+                { id: 22, title: "22. Psicología del Trading (Mark Douglas)", desc: "Mentalidad probabilística y eliminación del miedo." },
+                { id: 23, title: "23. Bitácora y Diario de Operaciones", desc: "Medición cuantitativa del desempeño operativo." },
+                { id: 24, title: "24. Evaluación Intermedia SMC", desc: "Prueba de conocimientos integrados de estructura y liquidez." }
+            ],
+            avanzado: [
+                { id: 25, title: "25. Order Flow e Interpretación Avanzada", desc: "Volumen horizontal, Footprint y delta de órdenes." },
+                { id: 26, title: "26. Volume Profile: POC, VAH y VAL", desc: "Distribución del volumen para targets y soportes." },
+                { id: 27, title: "27. Impacto de Noticias Macro (NFP, CPI)", desc: "Gestión del riesgo durante volatilidad por fundamentales." },
+                { id: 28, title: "28. Setups de Confluencia Múltiple", desc: "Combinación de FVG + OB + Horario Killzone." },
+                { id: 29, title: "29. Manejo de ATM Avanzado en NinjaTrader", desc: "Trailing Stop dinámico y parciales según la regla RA." },
+                { id: 30, title: "30. Gestión Avanzada del Drawdown TCP", desc: "Estrategias para no perder la cuenta simulada." },
+                { id: 31, title: "31. Control Emocional y Disciplina de Acero", desc: "Gestión de rachas perdedoras y sobreoperación." },
+                { id: 32, title: "32. Regla de Consistencia del 30%", desc: "Cálculo preciso para no superar el límite diario en Earn2Trade." },
+                { id: 33, title: "33. Plan de Trading Definitivo RA", desc: "Manual de operación paso a paso para rutina diaria." },
+                { id: 34, title: "34. De la Simulación a la Cuenta Live", desc: "Transición psicológica hacia capital financiado real." },
+                { id: 35, title: "35. Auditoría Operativa Personal", desc: "Revisión trimestral de métricas y optimización del R:R." },
+                { id: 36, title: "36. Examen Final de Maestría RA", desc: "Evaluación integral de 10 preguntas para certificación." }
+            ]
+        };
+
+        function renderModules() {
+            const userProgress = JSON.parse(localStorage.getItem('ra_progress') || '{}');
+            
+            ['principiante', 'intermedio', 'avanzado'].forEach(level => {
+                const container = document.getElementById(`grid-${level}`);
+                container.innerHTML = '';
+                
+                modulesData[level].forEach((mod, index) => {
+                    const isCompleted = userProgress[mod.id];
+                    const isLocked = mod.id > 1 && !userProgress[mod.id - 1];
+                    
+                    const card = document.createElement('div');
+                    card.className = `module-card ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}`;
+                    card.innerHTML = `
+                        <span class="module-badge">MÓDULO ${mod.id} ${isCompleted ? '✓ COMPLETADO' : ''}</span>
+                        <h4>${mod.title}</h4>
+                        <p>${mod.desc}</p>
+                        <div class="module-actions">
+                            <button class="btn btn-gold" style="font-size: 0.8rem;" ${isLocked ? 'disabled' : ''} onclick="openModuleQuiz(${mod.id})">
+                                ${isCompleted ? 'Repasar Examen' : 'Rendir Examen'}
+                            </button>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            });
+        }
+
+        function openModuleQuiz(modId) {
+            const modal = document.getElementById('quizModal');
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
+            
+            title.innerText = `EXAMEN — MÓDULO ${modId}`;
+            body.innerHTML = `
+                <p style="margin-bottom: 1rem; color: var(--text-muted);">
+                    Responde correctamente al menos 8 de las 10 preguntas para desbloquear el siguiente módulo.
+                </p>
+                <div style="background: var(--bg-dark); padding: 1rem; border-radius: 6px; margin-bottom: 1rem; border: 1px solid var(--border-color);">
+                    <p><strong>Pregunta 1:</strong> En el contrato MNQ, ¿cuál es el valor monetario de un tick de 0.25 puntos?</p>
+                    <div style="margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.4rem;">
+                        <label><input type="radio" name="q1" value="a"> A) $1.25</label>
+                        <label><input type="radio" name="q1" value="b"> B) $0.50</label>
+                        <label><input type="radio" name="q1" value="c"> C) $5.00</label>
+                    </div>
+                </div>
+                <button class="btn btn-gold" onclick="submitQuiz(${modId})">Enviar Respuestas</button>
+            `;
+            modal.style.display = 'flex';
+        }
+
+        function submitQuiz(modId) {
+            let progress = JSON.parse(localStorage.getItem('ra_progress') || '{}');
+            progress[modId] = true;
+            localStorage.setItem('ra_progress', JSON.stringify(progress));
+            
+            alert(`¡Felicidades! Aprobaste el examen del Módulo ${modId} con nota 9/10. Módulo completado.`);
+            closeModal();
+            renderModules();
+        }
+
+        function closeModal() {
+            document.getElementById('quizModal').style.display = 'none';
+        }
+
+        /* -------------------------------------------------------------------
+           3. SIMULADOR LIVE DE CANVAS (VELAS MNQ)
+        ------------------------------------------------------------------- */
+        let simCanvas, simCtx;
+        let simCandles = [];
+        let currentPrice = 19850.00;
+        let simRunning = false;
+        let simTrade = null;
+        let simBalance = 50000.00;
+
+        function initSimChart() {
+            simCanvas = document.getElementById('mnqChart');
+            simCtx = simCanvas.getContext('2d');
+            
+            // Ajustar resolución del canvas
+            simCanvas.width = simCanvas.offsetWidth;
+            simCanvas.height = simCanvas.offsetHeight;
+            
+            // Generar velas iniciales
+            simCandles = [];
+            for (let i = 0; i < 30; i++) {
+                let open = currentPrice;
+                let close = open + (Math.random() - 0.48) * 8;
+                let high = Math.max(open, close) + Math.random() * 4;
+                let low = Math.min(open, close) - Math.random() * 4;
+                simCandles.push({ open, high, low, close });
+                currentPrice = close;
+            }
+            
+            simRunning = true;
+            setInterval(updateSimChart, 1000);
+        }
+
+        function updateSimChart() {
+            if (!simRunning) return;
+
+            // Actualizar última vela o crear una nueva
+            let last = simCandles[simCandles.length - 1];
+            let delta = (Math.random() - 0.49) * 3;
+            last.close += delta;
+            last.high = Math.max(last.high, last.close);
+            last.low = Math.min(last.low, last.close);
+            
+            if (Math.random() > 0.7) {
+                simCandles.shift();
+                simCandles.push({
+                    open: last.close,
+                    high: last.close,
+                    low: last.close,
+                    close: last.close
+                });
+            }
+
+            currentPrice = last.close;
+            renderChart();
+            updateSimPnL();
+        }
+
+        function renderChart() {
+            simCtx.clearRect(0, 0, simCanvas.width, simCanvas.height);
+            
+            let padding = 30;
+            let chartWidth = simCanvas.width - padding * 2;
+            let chartHeight = simCanvas.height - padding * 2;
+            
+            let minP = Math.min(...simCandles.map(c => c.low));
+            let maxP = Math.max(...simCandles.map(c => c.high));
+            let range = maxP - minP || 1;
+
+            let candleWidth = chartWidth / simCandles.length;
+
+            // Dibujar fondo de rejilla
+            simCtx.strokeStyle = '#1E293B';
+            simCtx.lineWidth = 1;
+            for (let i = 1; i <= 4; i++) {
+                let y = padding + (chartHeight / 5) * i;
+                simCtx.beginPath();
+                simCtx.moveTo(padding, y);
+                simCtx.lineTo(simCanvas.width - padding, y);
+                simCtx.stroke();
+            }
+
+            // Dibujar Velas
+            simCandles.forEach((c, i) => {
+                let x = padding + i * candleWidth + candleWidth / 2;
+                let yOpen = padding + chartHeight - ((c.open - minP) / range) * chartHeight;
+                let yClose = padding + chartHeight - ((c.close - minP) / range) * chartHeight;
+                let yHigh = padding + chartHeight - ((c.high - minP) / range) * chartHeight;
+                let yLow = padding + chartHeight - ((c.low - minP) / range) * chartHeight;
+
+                let isGreen = c.close >= c.open;
+                simCtx.strokeStyle = isGreen ? '#22C55E' : '#EF4444';
+                simCtx.fillStyle = isGreen ? '#22C55E' : '#EF4444';
+
+                // Mecha
+                simCtx.beginPath();
+                simCtx.moveTo(x, yHigh);
+                simCtx.lineTo(x, yLow);
+                simCtx.stroke();
+
+                // Cuerpo
+                let bodyHeight = Math.max(Math.abs(yClose - yOpen), 2);
+                simCtx.fillRect(x - candleWidth / 3, Math.min(yOpen, yClose), (candleWidth / 3) * 2, bodyHeight);
+            });
+        }
+
+        function executeSimTrade(type) {
+            if (simTrade) {
+                alert("Ya tienes una posición abierta. Cérrala antes de abrir una nueva.");
+                return;
+            }
+            let contracts = parseInt(document.getElementById('simContracts').value);
+            simTrade = {
+                type: type,
+                entryPrice: currentPrice,
+                contracts: contracts
+            };
+            alert(`Orden ${type} ejecutada a ${currentPrice.toFixed(2)}`);
+        }
+
+        function updateSimPnL() {
+            if (!simTrade) return;
+            let diff = simTrade.type === 'LONG' ? currentPrice - simTrade.entryPrice : simTrade.entryPrice - currentPrice;
+            let pnl = diff * 2 * simTrade.contracts; // 1 punto = $2 en MNQ por contrato
+            
+            let pnlEl = document.getElementById('simPnL');
+            pnlEl.innerText = `$${pnl.toFixed(2)}`;
+            pnlEl.style.color = pnl >= 0 ? 'var(--green)' : 'var(--red)';
+        }
+
+        function closeSimTrade() {
+            if (!simTrade) return;
+            let diff = simTrade.type === 'LONG' ? currentPrice - simTrade.entryPrice : simTrade.entryPrice - currentPrice;
+            let pnl = diff * 2 * simTrade.contracts;
+            
+            simBalance += pnl;
+            document.getElementById('simBalance').innerText = `$${simBalance.toFixed(2)}`;
+            document.getElementById('simPnL').innerText = '$0.00';
+            document.getElementById('simPnL').style.color = 'var(--text-main)';
+            
+            // Auto registrar en bitácora
+            addJournalRow(new Date().toLocaleDateString(), `SIM ${simTrade.type}`, "Simulador MNQ Canvas", pnl);
+            
+            simTrade = null;
+            alert(`Posición cerrada. P&L Final: $${pnl.toFixed(2)}`);
+        }
+
+        function changeSimSession() {
+            alert("Sesión cambiada. Adaptando parámetros de volatilidad del mercado.");
+        }
+
+        /* -------------------------------------------------------------------
+           4. DIARIO DE TRADING
+        ------------------------------------------------------------------- */
+        function saveJournalEntry(e) {
+            e.preventDefault();
+            let dir = document.getElementById('jDir').value;
+            let pnl = parseFloat(document.getElementById('jPnL').value);
+            let setup = document.getElementById('jSetup').value;
+            let notes = document.getElementById('jNotes').value;
+            let date = new Date().toLocaleDateString();
+
+            addJournalRow(date, dir, setup, pnl, notes);
+
+            // Guardar localmente
+            let journal = JSON.parse(localStorage.getItem('ra_journal') || '[]');
+            journal.push({ date, dir, setup, pnl, notes });
+            localStorage.setItem('ra_journal', JSON.stringify(journal));
+
+            document.getElementById('journalForm').reset();
+        }
+
+        function addJournalRow(date, dir, setup, pnl, notes = "") {
+            const tbody = document.getElementById('journalTableBody');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${date}</td>
+                <td style="font-weight: bold; color: ${dir.includes('LONG') ? 'var(--green)' : 'var(--red)'}">${dir}</td>
+                <td>${setup}</td>
+                <td style="font-family: var(--font-mono); color: ${pnl >= 0 ? 'var(--green)' : 'var(--red)'}">$${pnl.toFixed(2)}</td>
+                <td>${notes}</td>
+            `;
+            tbody.prepend(tr);
+        }
+
+        function loadJournal() {
+            let journal = JSON.parse(localStorage.getItem('ra_journal') || '[]');
+            journal.forEach(item => addJournalRow(item.date, item.dir, item.setup, item.pnl, item.notes));
+        }
+
+        /* -------------------------------------------------------------------
+           5. CALCULADORA DE GESTIÓN DE RIESGO
+        ------------------------------------------------------------------- */
+        function calculateRisk() {
+            let balance = parseFloat(document.getElementById('calcBalance').value) || 50000;
+            let riskPct = parseFloat(document.getElementById('calcRiskPct').value) || 1;
+            let slPoints = parseFloat(document.getElementById('calcSLPoints').value) || 10;
+
+            let maxRiskUsd = balance * (riskPct / 100);
+            let riskPerContract = slPoints * 2; // MNQ = $2 por punto
+            let maxContracts = Math.floor(maxRiskUsd / riskPerContract);
+            let limit30 = maxRiskUsd * 1.8; 
+
+            document.getElementById('calcRiskUsd').innerText = `$${maxRiskUsd.toFixed(2)}`;
+            document.getElementById('calcContracts').innerText = `${maxContracts > 0 ? maxContracts : 1} Contrato(s)`;
+            document.getElementById('calc30Limit').innerText = `$${limit30.toFixed(2)}`;
+        }
+
+        /* -------------------------------------------------------------------
+           6. COACH IA (MENTORÍA)
+        ------------------------------------------------------------------- */
+        function sendCoachMessage() {
+            let input = document.getElementById('coachInput');
+            let text = input.value.trim();
+            if (!text) return;
+
+            let chatBox = document.getElementById('chatMessages');
+            
+            // Usuario
+            let userMsg = document.createElement('div');
+            userMsg.className = 'msg msg-user';
+            userMsg.innerText = text;
+            chatBox.appendChild(userMsg);
+
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Respuesta IA simulada orientada a la metodología RA
+            setTimeout(() => {
+                let iaMsg = document.createElement('div');
+                iaMsg.className = 'msg msg-ia';
+                iaMsg.innerText = getIaResponse(text);
+                chatBox.appendChild(iaMsg);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 800);
+        }
+
+        function getIaResponse(text) {
+            let lower = text.toLowerCase();
+            if (lower.includes('stop loss') || lower.includes('riesgo')) {
+                return "Recuerda la regla de oro en RA Trading: El Stop Loss no se negocia ni se mueve una vez ejecutada la orden. Mantén tu riesgo entre 0.5% y 1% por operación.";
+            } else if (lower.includes('mnq') || lower.includes('nasdaq')) {
+                return "El MNQ exige paciencia en la sesión de Nueva York. Busca la liquidez acumulada en la sesión de Londres antes de ingresar tras un Market Structure Shift (MSS).";
+            } else if (lower.includes('tcp') || lower.includes('earn2trade')) {
+                return "En Earn2Trade TCP $50k, respeta la regla del 30%. Si logras un día fuerte de ganancias, detén la operativa para no distorsionar tu métrica de consistencia.";
+            } else {
+                return "Excelente planteamiento, Rubén. Analiza la estructura en 15M, busca el Order Block o FVG correspondiente en 5M y opera solo si la confluencia R:R es superior a 1:2.";
+            }
+        }
+
+        /* -------------------------------------------------------------------
+           INICIALIZACIÓN
+        ------------------------------------------------------------------- */
+        window.onload = function() {
+            renderModules();
+            loadJournal();
+            calculateRisk();
+        };
+    </script>
+</body>
+</html>
